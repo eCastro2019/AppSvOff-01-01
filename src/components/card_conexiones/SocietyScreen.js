@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { getSocietyByComputer, getSocietyById } from '../../selectors/getSocietyById';
+import { computer } from '../../data/conexiones';
+import { getSocietyById } from '../../selectors/getSocietyById';
 
 export const SocietyScreen = ({ history }) => {
 
@@ -8,27 +9,10 @@ export const SocietyScreen = ({ history }) => {
 
     const view  = useMemo(
         () => getSocietyById( SocietyId ), [ SocietyId ]
-    );
-
-    let view2 = useMemo(
-        () => getSocietyByComputer( SocietyId ), [ SocietyId ]
-    );       
-
-    console.log(view2);
+    );   
  
     if ( !view ) {
         return <Redirect to="/" />;
-    }
-
-    if ( !view2 ) {
-        view2 = {
-            'society_id':       '',
-            'id_computer':      '',
-            'category':         '',
-            'name_computer':    '',
-            'dropbox':          '',
-            'observation':      ''
-        };
     }
 
     const handleReturn = () => {
@@ -48,10 +32,6 @@ export const SocietyScreen = ({ history }) => {
         address               
     } = view;
 
-    const {        
-        id_computer,
-        name_computer         
-    } = view2;
     
     return (
         <div className="row mt-5">
@@ -73,20 +53,15 @@ export const SocietyScreen = ({ history }) => {
                         <small> { address } </small>
                         <p> { note } </p>
                     </div>
-                </div>  
+                </div>                  
 
-                <ul className="list-group list-group-flush" id= { id_computer }>
-                    <li className="list-group-item"> <b> Computadora: </b> { name_computer } </li>                    
-                </ul>  
-
-                {/* {
-                    view2.map( () => (
+                {
+                    computer[SocietyId].map( (  { id_computer, name_computer } ) => (                        
                         <ul className="list-group list-group-flush" id= { id_computer }>
-                            <li className="list-group-item"> <b> Computadora: </b> { name_computer } </li>                    
-                        </ul>                        
+                            <li className="list-group-item"> <b> Computadora: </b> { name_computer } </li>                                        
+                        </ul> 
                     ))
-                }  */}
-                                                        
+                }
 
                 <button 
                     className="btn btn-outline-info"

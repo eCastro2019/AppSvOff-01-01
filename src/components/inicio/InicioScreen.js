@@ -5,7 +5,6 @@ export const InicioScreen = () => {
         <div>
             <h1>Conexiones Remotas</h1>
             <hr />
-            
         </div>
     )
 }
